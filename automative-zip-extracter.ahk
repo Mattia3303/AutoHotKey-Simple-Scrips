@@ -15,7 +15,7 @@
                 ; Check if the selected file has a .zip extension
                 if !InStr(zipPath, ".zip"){
                     MsgBox("All files must be .zip! Invalid file: " item.Path, , "AutoHotKey Error Message - 'Win + Z' command")
-                    return
+                    Exit
                 }
             }
 
