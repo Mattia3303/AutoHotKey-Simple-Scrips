@@ -13,6 +13,8 @@ This repository contains some simple AHK scripts that associate a shortcut to an
 ## Current Scripts
 1. `case_converter.ahk`: it converts a selected text in an editor to *uppercase* or *lowercase*, depending on the shortcut pressed
 2. `zip-exctracter.ahk`: it automatically extract all the files from a *zip file*
+   
+And more to come :)
 
 ## Usage
 To activate the shortcut, follow these simple steps:
