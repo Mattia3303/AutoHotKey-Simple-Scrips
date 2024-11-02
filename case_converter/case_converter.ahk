@@ -2,20 +2,16 @@
 
 ShowErrorMessage(shortCut){
     MsgBox("No text was selected", "AutoHotKey Error Message - '" shortCut "' command")
+    Exit
 }
 
-^!U::
-{
-    ; Save the previous clipboard content to verify it changes after executing the CTRL + C command
-    previusClipBoardText := A_Clipboard
-
-    ; Copy the selected text to the clipboard
+GetSelectedText(shortCut){
+    ; Copy the selected text to the CLIPBOARD
     Send "^c"
     Sleep 100
-    if !ClipWait(1) || previusClipBoardText = A_Clipboard ; wait up to 1 second to ensure the text is copied
+    if !ClipWait(1) ; wait up to 1 second to ensure the text is copied
     {
-        ShowErrorMessage("CTRL + ALT + U")
-        Exit
+        ShowErrorMessage(shortCut)
     }
 
     ; Get the text from the clipboard
@@ -23,52 +19,43 @@ ShowErrorMessage(shortCut){
 
     ; Check if the last character of the copied text is a newline
     if (SubStr(text, -1) = "`n" || SubStr(text, -1) = "`r") {
-        ShowErrorMessage("CTRL + ALT + U")
-        Exit
+        ShowErrorMessage(shortCut)
     }
 
-    ; Convert to uppercase
-    text := StrUpper(text)
+    ; Check if a file was copied (in the clipboard there would be the file path)
+    if (FileExist(text)){
+        ShowErrorMessage(shortCut)
+    }
 
+    return text
+}
+
+PasteText(text){
     ; Set the modified text in the clipboard
     A_Clipboard := text
 
     ; Paste the modified text
     Send "^v"
+}
+
+^!U::
+{
+    text := GetSelectedText("CTRL + ALT + U")
+    ; Convert to uppercase
+    text := StrUpper(text)
+
+    PasteText(text)
 }
 
 
 ^!L::
 {
-    ; Save the previous clipboard content to verify it changes after executing the CTRL + C command
-    previusClipBoardText := A_Clipboard
+    text := GetSelectedText("CTRL + ALT + L")
 
-    ; Copy the selected text to the clipboard
-    Send "^c"
-    Sleep 100
-    if !ClipWait(1) || previusClipBoardText = A_Clipboard ; wait up to 1 second to ensure the text is copied
-    {
-        ShowErrorMessage("CTRL + ALT + U")
-        Exit
-    }
-
-    ; Get the text from the clipboard
-    text := A_Clipboard
-
-    ; Check if the last character of the copied text is a newline
-    if (SubStr(text, -1) = "`n" || SubStr(text, -1) = "`r") {
-        ShowErrorMessage("CTRL + ALT + U")
-        Exit
-    }
-
-    ; Convert to uppercase
+    ; Convert to lowercase
     text := StrLower(text)
 
-    ; Set the modified text in the clipboard
-    A_Clipboard := text
-
-    ; Paste the modified text
-    Send "^v"
+    PasteText(text)
 }
 
 
