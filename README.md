@@ -7,7 +7,7 @@ This repository contains some simple AHK scripts that associate a shortcut to an
 **AutoHotkey** is a free and open-source custom scripting language for Microsoft Windows, primarily designed to provide easy keyboard shortcuts or hotkeys, fast macro-creation, and software automation to allow users of most computer skill levels to automate repetitive tasks in any Windows application. Tutorials and documentation on this [link](https://www.autohotkey.com/docs/v2/).
 
 ## Prerequisites
-- Windows OS
+- Windows OS (I have Windows 10, don't know if it works even with the 11th)
 - [AutoHotkey v2.0](https://www.autohotkey.com/download/)
 
 ## Current Scripts
