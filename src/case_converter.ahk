@@ -1,5 +1,7 @@
 #Requires AutoHotkey v2.0
 
+#Include C:\Documenti\Mattia\_Code\AutoHotKey\set-first-shortcut.ahk
+
 ShowErrorMessage(shortCut){
     MsgBox("No text was selected", "AutoHotKey Error Message - '" shortCut "' command")
     Exit
@@ -38,24 +40,31 @@ PasteText(text){
     Send "^v"
 }
 
-^!U::
-{
-    text := GetSelectedText("CTRL + ALT + U")
-    ; Convert to uppercase
-    text := StrUpper(text)
+; Activates the hotkeys only if the condition is respected
+#HotIf manager.isStateActive() 
+    u::
+    {
+        text := GetSelectedText("'CTRL + A' -> 'U'")
+        ; Convert to uppercase
+        text := StrUpper(text)
 
-    PasteText(text)
-}
+        PasteText(text)
+
+        manager.resetState()
+    }
 
 
-^!L::
-{
-    text := GetSelectedText("CTRL + ALT + L")
+    l::
+    {
+        text := GetSelectedText("'CTRL + A' -> 'L'")
 
-    ; Convert to lowercase
-    text := StrLower(text)
+        ; Convert to lowercase
+        text := StrLower(text)
 
-    PasteText(text)
-}
+        PasteText(text)
+
+        manager.resetState()
+    }
+#HotIf 
 
 
