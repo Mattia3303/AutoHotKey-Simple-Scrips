@@ -1,11 +1,7 @@
 #Requires AutoHotkey v2.0
 
-#Include C:\Documenti\Mattia\_Code\AutoHotKey\set-first-shortcut.ahk
-
-ShowErrorMessage(shortCut){
-    MsgBox("No text was selected", "AutoHotKey Error Message - '" shortCut "' command")
-    Exit
-}
+#Include set-first-shortcut.ahk
+#Include utils.ahk
 
 GetSelectedText(shortCut){
     ; Copy the selected text to the CLIPBOARD
@@ -13,7 +9,7 @@ GetSelectedText(shortCut){
     Sleep 100
     if !ClipWait(1) ; wait up to 1 second to ensure the text is copied
     {
-        ShowErrorMessage(shortCut)
+        ShowErrorMessage("No text was selected", shortCut)
     }
 
     ; Get the text from the clipboard
@@ -21,12 +17,12 @@ GetSelectedText(shortCut){
 
     ; Check if the last character of the copied text is a newline
     if (SubStr(text, -1) = "`n" || SubStr(text, -1) = "`r") {
-        ShowErrorMessage(shortCut)
+        ShowErrorMessage("No text was selected", shortCut)
     }
 
     ; Check if a file was copied (in the clipboard there would be the file path)
     if (FileExist(text)){
-        ShowErrorMessage(shortCut)
+        ShowErrorMessage("No text was selected", shortCut)
     }
 
     return text
@@ -44,7 +40,8 @@ PasteText(text){
 #HotIf manager.isStateActive() 
     u::
     {
-        text := GetSelectedText("'CTRL + A' -> 'U'")
+        shortCut := "U"
+        text := GetSelectedText(shortCut)
         ; Convert to uppercase
         text := StrUpper(text)
 
@@ -56,7 +53,8 @@ PasteText(text){
 
     l::
     {
-        text := GetSelectedText("'CTRL + A' -> 'L'")
+        shortCut := "L"
+        text := GetSelectedText(shortCut)
 
         ; Convert to lowercase
         text := StrLower(text)

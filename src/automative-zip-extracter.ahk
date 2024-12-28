@@ -1,12 +1,14 @@
 #Requires AutoHotkey v2.0
 
 #Include set-first-shortcut.ahk
+#Include utils.ahk
 
 ; Activates the hotkeys only if the condition is respected
 #HotIf manager.isStateActive() 
 
     Z::
     {
+        shortCut := "Z"
         ; Create a COM object to interact with File Explorer
         shell := ComObject("Shell.Application")
 
@@ -16,43 +18,30 @@
                 ; Get the selected items
                 selected := window.document.SelectedItems()
 
+                ; Show error message if no items are selected
+                if !selected.Count {
+                    ShowErrorMessage("No files selected!", shortCut)
+                }
+
                 for item in selected {
                     zipPath := item.Path 
 
-                    ; Check if the selected file has a .zip extension
-                    if !InStr(zipPath, ".zip"){
-                        MsgBox("All files must be .zip! Invalid file: " item.Path, , "AutoHotKey Error Message - 'Win + Z' command")
-                        Exit
+                    ; Check if the selected file has a "zip" extension
+                    if !checkExtension(zipPath, "zip") {
+                        ShowErrorMessage("All files must be .zip! Invalid file: " item.Path, shortCut)
                     }
                 }
 
                 for item in selected {
                     ; Get the full path of the zip file
                     zipPath := item.Path 
-                    
+
                     ; Access the zip file using Shell Namespace
                     ZipFile := shell.NameSpace(zipPath)
 
                     ; Check if the zip file exists
                     if (!ZipFile) {
-                        MsgBox( "ZIP file not found!", "AutoHotKey Error Message - 'Win + Z' command")
-                        Exit
-                    }
-
-                    ; Check if there's only one item (the folder) inside the zip
-                    if (ZipFile.Items().Count() != 1) {
-                        MsgBox("More that one file inside the zip (there should be only a folder)", "AutoHotKey Error Message - 'Win + Z' command")
-                        Exit
-                    }
-
-                    ; Get the path of the folder inside the zip
-                    filesFolderPath := ZipFile.Items().Item(0).Path
-                    
-                    ; Access the folder inside the zip
-                    FilesFolder := shell.NameSpace(filesFolderPath)
-                    if (!FilesFolder) {
-                        MsgBox ("The folder inside the zip is invalid!", "AutoHotKey Error Message - 'Win + Z' command")
-                        Exit
+                        ShowErrorMessage("ZIP file not found!", shortCut)
                     }
 
                     ; Get the destination folder where files will be extracted
@@ -61,12 +50,11 @@
 
                     ; Check if the destination folder is valid
                     if !Destination {
-                        MsgBox ("The destination folder is invalid!", "AutoHotKey Error Message - 'Win + Z' command")
-                        Exit
+                        ShowErrorMessage("The destination folder is invalid!", shortCut)
                     }
 
-                    ; Extract files from the folder inside the zip
-                    for zItem in FilesFolder.Items() {
+                    ; Extract all files from the zip
+                    for zItem in ZipFile.Items() {
                         Destination.CopyHere(zItem)
                     }
 
@@ -74,9 +62,9 @@
                     FileDelete(zipPath)
                 }
             }
-        } 
+        }
 
         manager.resetState()
     }
 
-#HotIf 
+#HotIf

@@ -1,6 +1,6 @@
 # Script Descriptions
 Remember that every specific shortcut must be preceded by the common one for all scripts: `CTRL + A`
-
+## Case Converter
 ### Description
 `case-converter` is a script that associates `U` and `L` shortcuts to a code that convertes the text selected in, respectevely, *uppercase* and *lowercase*.
 
