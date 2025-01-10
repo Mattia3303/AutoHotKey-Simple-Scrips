@@ -1,7 +1,8 @@
 #Requires AutoHotkey v2.0
 
-#Include set-first-shortcut.ahk
-#Include utils.ahk
+#Include ..\lib\set-first-shortcut.ahk
+#Include ..\lib\utils.ahk
+
 
 GetSelectedText(shortCut){
     ; Copy the selected text to the CLIPBOARD
