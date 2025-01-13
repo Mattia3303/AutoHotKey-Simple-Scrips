@@ -1,3 +1,5 @@
-/git-ignore-files
+/Git_Ignore_FIles
 /build
 /.vscode
+private-compile-script.cmd
+private-compile-all.cmd

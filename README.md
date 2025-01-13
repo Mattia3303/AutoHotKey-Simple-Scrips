@@ -17,6 +17,23 @@ This repository contains some simple AHK scripts that associate a shortcut to an
 And more to come :)
 
 ## Installation
+### Using .cmd Scripts
+To compile the scripts using the provided `.cmd` scripts, follow these steps:
+1. Ensure you have [AutoHotkey v2.0](https://www.autohotkey.com/download/) installed.
+2. Open the `compile-script.cmd` file and set the `SHELL_STARTUP_PATH` variable to the path of your shell startup directory.
+3. Run the `compile-script.cmd` script with the required parameters:
+```sh
+compile-script.cmd FILENAME [ADD_TO_STARTUP]
+```
+4. Alternatively, you can compile all scripts in the `src` directory by running:
+```sh
+compile-all.cmd [ADD_TO_STARTUP]
+```
+5. If `ADD_TO_STARTUP` is set to `1`, the compiled script will be added to the shell startup directory.
+
+**Note**: Ensure the `SHELL_STARTUP_PATH` is correctly set in the `compile-script.cmd` file to avoid errors when adding the script to startup.
+
+### Using AHK Dash
 To install the shortcut, follow these simple steps:
 1. Open *AutoHotKey Dash* and select the `Compile` option.
 2. **Download** the `.ahk` file and browse it on the dash.
