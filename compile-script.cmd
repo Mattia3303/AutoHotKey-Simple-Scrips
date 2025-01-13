@@ -24,8 +24,9 @@ set BUILD_DIR=build
 set COMPILER="C:\Program Files\AutoHotkey\Compiler\Ahk2Exe.exe"
 
 :: Placeholder for the shell startup path
-:: SET YOUR OWN SHELL_STARTUP PATH
+:: ----------SET YOUR OWN SHELL_STARTUP PATH-----------------------------
 set SHELL_STARTUP_PATH=
+:: --------------------------------------------------------------------------
 
 :: Optional: check if the second parameter is provided
 set ADD_TO_STARTUP=0
