@@ -1,4 +1,5 @@
 @echo off
+setlocal enabledelayedexpansion
 
 :: Check the number of parameters
 :: Counting
@@ -64,9 +65,6 @@ if %errorlevel% neq 0 (
 
 echo Compilation successful!
 
-:: Get the absolute path of the build directory
-for /f "delims=" %%i in ('cd') do set ABSOLUTE_BUILD_DIR=%%i\%BUILD_DIR%
-
 :: Add to shell startup if requested
 if "%ADD_TO_STARTUP%" EQU "1" (
     echo Adding "%BUILD_DIR%\%FILENAME%.exe" to shell startup...
@@ -76,20 +74,29 @@ if "%ADD_TO_STARTUP%" EQU "1" (
         exit /b 1
     )
 
+    :: Get the absolute path of the build directory
+    for /f "delims=" %%i in ('cd') do set ABSOLUTE_BUILD_DIR=%%i\%BUILD_DIR%
+
     set SHORTCUT=%SHELL_STARTUP_PATH%\%FILENAME%.lnk
+
+    :: Stop if the shortcut is already there
+    if exist "!SHORTCUT!" (
+        echo Shortcut "%FILENAME%.lnk" already exists. Skipping creation.
+        exit /b 0
+    )
 
     powershell -NoProfile -Command ^
         "$ws = New-Object -ComObject WScript.Shell; " ^
-        "$shortcut = $ws.CreateShortcut('%SHORTCUT%'); " ^
-        "$shortcut.TargetPath = '%ABSOLUTE_BUILD_DIR%\\%FILENAME%.exe'; " ^
+        "$shortcut = $ws.CreateShortcut('!SHORTCUT!'); " ^
+        "$shortcut.TargetPath = '!ABSOLUTE_BUILD_DIR!\\%FILENAME%.exe'; " ^
         "$shortcut.Save();"
 
-    if %errorlevel% neq 0 (
+    if !errorlevel! neq 0 (
         echo Error: Failed to create startup shortcut.
         exit /b 1
     )
 
-    echo Shortcut created successfully at "%SHORTCUT%".
+    echo Shortcut created successfully at "!SHORTCUT!".
 )
 
 exit /b 0
