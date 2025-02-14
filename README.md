@@ -26,6 +26,7 @@ To compile the scripts using the provided `.cmd` scripts, follow these steps:
     compile-script.cmd FILENAME [ADD_TO_STARTUP]
     ```
     If `ADD_TO_STARTUP` is set to `1`, the compiled script will be added to the shell startup directory.
+    If `ADD_TO_STARTUP` is set to `1`, the compiled script will be runned.
 
     The file name has to be WITHOUT extension.  
     Alternatively, you can compile all scripts in the `src` directory by running:

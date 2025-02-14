@@ -47,9 +47,9 @@ getZipsPaths(shell, shortCut) {
         shell := ComObject("Shell.Application")
 
 
-        zipsPaths := getZipsPaths(shell, shortCut)
+        zipPaths := getZipsPaths(shell, shortCut)
 
-        for zipPath in zipsPaths {
+        for zipPath in zipPaths {
             ZipFile := shell.NameSpace(zipPath)
 
             if !ZipFile {
