@@ -29,7 +29,7 @@ set COMPILER="C:\Program Files\AutoHotkey\Compiler\Ahk2Exe.exe"
 set SHELL_STARTUP_PATH=
 :: --------------------------------------------------------------------------
 
-:: Optional: check if the second parameter is provided
+:: Check if the second parameter is provided
 set ADD_TO_STARTUP=0
 if "%argC%" EQU "2" (
     set ADD_TO_STARTUP=%~2
@@ -79,10 +79,10 @@ if "%ADD_TO_STARTUP%" EQU "1" (
 
     set SHORTCUT=%SHELL_STARTUP_PATH%\%FILENAME%.lnk
 
-    :: Stop if the shortcut is already there
+    :: If the shortcut is already there, it will be deleted
     if exist "!SHORTCUT!" (
-        echo Shortcut "%FILENAME%.lnk" already exists. Skipping creation.
-        exit /b 0
+        echo Shortcut "%FILENAME%.lnk" already exists. Deleting it...
+        del "!SHORTCUT!"
     )
 
     powershell -NoProfile -Command ^

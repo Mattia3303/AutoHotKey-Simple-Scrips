@@ -25,30 +25,29 @@ To compile the scripts using the provided `.cmd` scripts, follow these steps:
     ```sh
     compile-script.cmd FILENAME [ADD_TO_STARTUP]
     ```
+    If `ADD_TO_STARTUP` is set to `1`, the compiled script will be added to the shell startup directory.
+
     The file name has to be WITHOUT extension.  
     Alternatively, you can compile all scripts in the `src` directory by running:
     ```sh
     compile-all.cmd [ADD_TO_STARTUP]
     ```
-     If `ADD_TO_STARTUP` is set to `1`, the compiled script will be added to the shell startup directory.
 
-**Note**: Ensure the `SHELL_STARTUP_PATH` is correctly set in the `compile-script.cmd` file to avoid errors when adding the script to startup.
+**Note**: Ensure the autohotkey `COMPILER` path is correctly set in the `compile-script.cmd` file (line 25).
 
 ### Using AHK Dash
 To install the shortcut, follow these simple steps:
 1. Open *AutoHotKey Dash* and select the `Compile` option.
 2. **Download** the `.ahk` file and browse it on the dash.
 3. Choose the destination of the `.exe` file and **convert it**.
-4. **Run** the `.exe` file: 
-```sh
-"path\to\your\script.exe"
-```
 
-**Suggestion**: If you want to have the shortcut always available, you can add the script to the *Windows Startup Folder* (guide on [this link](https://www.dell.com/support/kbdoc/en-us/000124550/how-to-add-app-to-startup-in-windows-10#:~:text=Add%20apps%20to%20startup%20in%20Windows%2010.&text=In%20the%20Run%20command%20field,key%20to%20open%20Startup%20folder.&text=Copy%20and%20paste%20the%20app,app%20is%20added%20to%20startup.)).  
+
+**SUGGESTION**:  
+ If you want to have the shortcut always available, you can add the script to the *Windows Startup Folder* (guide on [this link](https://www.dell.com/support/kbdoc/en-us/000124550/how-to-add-app-to-startup-in-windows-10#:~:text=Add%20apps%20to%20startup%20in%20Windows%2010.&text=In%20the%20Run%20command%20field,key%20to%20open%20Startup%20folder.&text=Copy%20and%20paste%20the%20app,app%20is%20added%20to%20startup.)).  
 Windows will run the script at your PC startup.
 
 ## Usage
-Every hotkey needs two consecutive shortcuts to be activated:  
+Every hotkey I made needs two consecutive shortcuts to be activated:  
 `CTRL + A`, same for all, and then the specific shortcut for that script (see README file inside *src* directory)
 
 ## Contributions

@@ -18,7 +18,7 @@ If no text was selected, it shows an error `MgsBox`.
 Windows10 allows to extract but you have to browse to choose the folder to place the files, 
 but I always need to put the files in the zip's folder. 
 This code solves this problem: what you have to do is to select in file explorer the zip you want your file of, 
-and then press "Win + Z". The 
+and then press `Z`
 
 ### Usage 
 
