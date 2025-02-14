@@ -8,13 +8,13 @@ for %%x in (%*) do Set /A argC+=1
 
 if "%argC%" LSS "1" (
     echo Error: Missing required parameter.
-    echo Usage: compile_script FILENAME [ADD_TO_STARTUP]
+    echo Usage: compile_script FILENAME [ADD_TO_STARTUP] [RUN_SCRIPT]
     exit /b 1
 )
 
-if "%argC%" GTR "2" (
+if "%argC%" GTR "3" (
     echo Error: Too many parameters.
-    echo Usage: compile_script FILENAME [ADD_TO_STARTUP]
+    echo Usage: compile_script FILENAME [ADD_TO_STARTUP] [RUN_SCRIPT]
     exit /b 1
 )
 
@@ -29,15 +29,24 @@ set COMPILER="C:\Program Files\AutoHotkey\Compiler\Ahk2Exe.exe"
 set SHELL_STARTUP_PATH=
 :: --------------------------------------------------------------------------
 
-:: Check if the second parameter is provided
+:: Check if the optional parameters are provided
 set ADD_TO_STARTUP=0
-if "%argC%" EQU "2" (
+if "%argC%" GEQ "2" (
     set ADD_TO_STARTUP=%~2
 )
 
-:: Validate ADD_TO_STARTUP parameter
+set RUN_SCRIPT=0
+if "%argC%" GEQ "3" (
+    set RUN_SCRIPT=%~3
+)
+
+:: Validate the optional parameters
 if not "%ADD_TO_STARTUP%" EQU "0" if not "%ADD_TO_STARTUP%" EQU "1" (
     echo Error: Invalid value for ADD_TO_STARTUP. It must be 0 or 1.
+    exit /b 1
+)
+if not "%RUN_SCRIPT%" EQU "0" if not "%RUN_SCRIPT%" EQU "1" (
+    echo Error: Invalid value for RUN_SCRIPT. It must be 0 or 1.
     exit /b 1
 )
 
@@ -97,6 +106,12 @@ if "%ADD_TO_STARTUP%" EQU "1" (
     )
 
     echo Shortcut created successfully at "!SHORTCUT!".
+)
+
+:: Run the script if requested
+if "%RUN_SCRIPT%" EQU "1" (
+    echo Running "%BUILD_DIR%\%FILENAME%.exe"...
+    start "" "%BUILD_DIR%\%FILENAME%.exe"
 )
 
 exit /b 0

@@ -1,21 +1,37 @@
 @echo off
 
-REM Verify that no required parameters are passed beyond the first optional parameter
-if "%~2" NEQ "" (
+:: Check the number of parameters
+:: Counting
+set argC=0
+for %%x in (%*) do Set /A argC+=1
+
+
+if "%argC%" GTR "2" (
     echo Error: Too many parameters.
-    echo Usage: compile_all.cmd [ADD_TO_STARTUP]
+    echo Usage: compile_script FILENAME [ADD_TO_STARTUP] [RUN_SCRIPT]
     exit /b 1
 )
 
-REM Check if the optional first parameter is provided
+
+REM Check if the optional parameters are provided
 set ADD_TO_STARTUP=0
-if "%~1" NEQ "" (
+if "%argC%" GEQ "1" (
     set ADD_TO_STARTUP=%~1
 )
 
-REM Validate the ADD_TO_STARTUP parameter
+set RUN_SCRIPT=0
+if "%argC%" GEQ "2" (
+    set RUN_SCRIPT=%~2
+)
+
+
+REM Validate the optional parameters
 if not "%ADD_TO_STARTUP%" EQU "0" if not "%ADD_TO_STARTUP%" EQU "1" (
     echo Error: Invalid value for ADD_TO_STARTUP. It must be 0 or 1.
+    exit /b 1
+)
+if not "%RUN_SCRIPT%" EQU "0" if not "%RUN_SCRIPT%" EQU "1" (
+    echo Error: Invalid value for RUN_SCRIPT. It must be 0 or 1.
     exit /b 1
 )
 
@@ -33,7 +49,7 @@ for %%F in ("%SRC_DIR%\*.ahk") do (
     echo -----------------------------------
 
     REM Call the compile script with the ADD_TO_STARTUP parameter
-    call compile-script.cmd "%%~nF" %ADD_TO_STARTUP%
+    call compile-script.cmd "%%~nF" %ADD_TO_STARTUP% %RUN_SCRIPT%
 
     REM Capture the error level from the previous call
     set "LAST_ERRORLEVEL=%errorlevel%"
